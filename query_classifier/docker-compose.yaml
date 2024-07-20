@@ -1,0 +1,16 @@
+services:
+  web:
+    build: /api
+    container_name: query_classifier_api
+    ports:
+      - "8000:80"
+    volumes:
+      - ./api:/app
+    environment:
+      - MODULE_NAME=main
+      - VARIABLE_NAME=app
+    networks:
+      - fastapi_network
+
+networks:
+  fastapi_network:
