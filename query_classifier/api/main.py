@@ -1,7 +1,17 @@
 from fastapi import FastAPI
 import nltk
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Позволяет всем источникам, можно указать конкретные
+    allow_credentials=True,
+    allow_methods=["*"],  # Позволяет все методы (GET, POST и т.д.)
+    allow_headers=["*"],  # Позволяет все заголовки
+)
+
 nltk.download('stopwords')
 
 
@@ -32,7 +42,7 @@ def get_prediction(query):
         prediction = inverser.transform(prediction_raw)
     except Exception as e:
         print(e)
-        return {'по должности-лемме': 'Нт', 'общие фразы': 'общая фраза', 'занятость': ['Нет'], 'по дополнительному признаку': ['Нет'], 'по условиям': ['Нет']}
+        return {'по должности-лемме': 'Нет', 'общие фразы': 'общая фраза', 'занятость': ['Нет'], 'по дополнительному признаку': ['Нет'], 'по условиям': ['Нет']}
 
     return prediction
 
